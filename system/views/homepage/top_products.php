@@ -1,10 +1,14 @@
-<ul>
+<h2>Top products</h2>
+<div class="products">
   <?php foreach($products as $product) : ?>
 
-    <li>
-      <?php echo $product['name']; ?>
-      <div class="price"><?php echo $product['price']; ?> Kč</div>
-    </li>
+    <a class="product" href="<?php echo url::to('product', array('product_id' => $product['id'])); ?>">
+      <?php if($product['filename']) : ?>
+        <img src="media/product/<?php echo $product['id']; ?>/<?php echo $product['filename']; ?>" />
+      <?php endif; ?>
+      <span class="name"><?php echo $product['name']; ?></span>
+      <span class="price"><?php echo $product['price']; ?> Kč</span>
+    </a>
 
   <?php endforeach; ?>
-</ul>
+</div>

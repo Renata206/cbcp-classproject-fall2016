@@ -1,1 +1,1 @@
-&copy; 2016 Jan Polak
+&copy; 2016 <?php echo config::get('copyright_owner', 'set copyright_owner in config'); ?>

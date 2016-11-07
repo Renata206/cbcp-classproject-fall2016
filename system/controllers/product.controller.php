@@ -11,6 +11,11 @@ class product_controller
 
     $product_model = model::get('product');
     $content->product = $product_model->retrieveById($product_id);
+    if(!$content->product)
+    {
+      router::runController('error404');
+      return;
+    }
 
     if(!empty($_POST['order']))
     {
@@ -25,6 +30,43 @@ class product_controller
     {
       $content->title = $content->product['name'];
     }
+
+    // main image
+    $query = "
+      SELECT `product_image`.*
+      FROM `product_image`
+      WHERE `product_image`.`product_id` = :product_id
+      ORDER BY `product_image`.`order` ASC
+      LIMIT 1
+    ";
+    $substitutions = array(
+      ':product_id' => $content->product['id']
+    );
+    $result = db::execute($query, $substitutions);
+    $main_image = $result->fetch();
+    $content->main_image = $main_image;
+
+
+    // all images
+    $query = "
+      SELECT `product_image`.*
+      FROM `product_image`
+      WHERE `product_image`.`product_id` = :product_id
+      ORDER BY `product_image`.`order` ASC
+    ";
+    $substitutions = array(
+      ':product_id' => $content->product['id']
+    );
+    $result = db::execute($query, $substitutions);
+    $images = $result->fetchAll();
+    if(count($images))
+    {
+      $gallery = new view('product/gallery');
+      $gallery->product = $content->product;
+      $gallery->images = $images;
+      $content->gallery = $gallery;
+    }
+    
 
     presenter::present($content);
   }

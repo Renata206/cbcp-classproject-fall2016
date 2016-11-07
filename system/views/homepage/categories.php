@@ -1,3 +1,4 @@
+<h2>Browse our products</h2>
 <ul>
   <li>
      <a href="index.php?page=category">All product categories</a>

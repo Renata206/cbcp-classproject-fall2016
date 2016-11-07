@@ -1,1 +1,4 @@
-<h1>My electronics eshop</h1>
+<h1>
+  <a href="<?php echo url::to(""); ?>">
+    <img src="img/my-shop.png" alt="MY SHOP" /></a>
+</h1>

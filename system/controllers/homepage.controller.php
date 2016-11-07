@@ -11,8 +11,12 @@ class homepage_controller
     // TOP PRODUCTS
     $top_products = new view('homepage/top_products');
     $query = "
-      SELECT `product`.*
+      SELECT `product`.*,
+        `product_image`.`filename`
       FROM `product`
+      LEFT JOIN `product_image`
+        ON `product`.`id` = `product_image`.`product_id`
+        AND `product_image`.`order` = 1
       WHERE `product`.`is_top` = 1
       ORDER BY `product`.`name` ASC
     ";

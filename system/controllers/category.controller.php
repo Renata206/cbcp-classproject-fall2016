@@ -7,24 +7,24 @@ class category_controller
     $layout = new view('category/layout');
 
     // we get the category uri from URL
-    $category_uri = request::get('category', null);
+    $category_id = request::get('category_id', null);
 
 
 
 
 
     // if category uri was found in the URL, try to find that category
-    if($category_uri)
+    if($category_id)
     {
       // select the category from the database based on the $category_uri
       $query = "
         SELECT `category`.*
         FROM `category`
-        WHERE `category`.`uri` = :category_uri
+        WHERE `category`.`id` = :category_id
         LIMIT 1
       ";
       $substitutions = array(
-        ':category_uri' => $category_uri
+        ':category_id' => $category_id
       );
       $result = db::execute($query, $substitutions);
       $category = $result->fetch();
@@ -98,10 +98,14 @@ class category_controller
     if($category!=null) // if a category was found
     {
       $query = "
-        SELECT `product`.*
+        SELECT `product`.*,
+          `product_image`.`filename`
         FROM `category_has_product`
         LEFT JOIN `product`
           ON `category_has_product`.`product_id` = `product`.`id`
+        LEFT JOIN `product_image`
+          ON `product`.`id` = `product_image`.`product_id`
+          AND `product_image`.`order` = 1
         WHERE `category_has_product`.`category_id` = :category_id
           OR `category_has_product`.`category_id` IN (
             SELECT `category`.`id`
@@ -117,8 +121,12 @@ class category_controller
     else
     {
       $query = "
-        SELECT `product`.*
+        SELECT `product`.*,
+          `product_image`.`filename`
         FROM `product`
+        LEFT JOIN `product_image`
+          ON `product`.`id` = `product_image`.`product_id`
+          AND `product_image`.`order` = 1
         WHERE 1
         ORDER BY `product`.`name` ASC
       ";
