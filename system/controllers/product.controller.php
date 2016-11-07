@@ -9,8 +9,16 @@ class product_controller
     $content = new view('product/detail');
     $content->title = 'Product detail';
 
-    $product_model = model::get('product');
-    $content->product = $product_model->retrieveById($product_id);
+    $query = "
+      SELECT `product`.*
+      FROM `product`
+      WHERE `product`.`id` = :product_id
+    ";
+    $substitutions = array(
+      ':product_id' => $product_id
+    );
+    $result = db::execute($query, $substitutions);
+    $content->product = $result->fetch();
     if(!$content->product)
     {
       router::runController('error404');

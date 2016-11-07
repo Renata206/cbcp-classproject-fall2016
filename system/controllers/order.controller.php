@@ -145,9 +145,20 @@ class order_controller
 
       $product_ids = basket::getProductIds();
 
-      $product_model = model::get('product');
       $content->items = $basket_items;
-      $content->products = $product_model->getProductsByIds($product_ids);
+      $query = "
+        SELECT `product`.*
+        FROM `product`
+        WHERE `product`.`id` IN (".join(", ", $product_ids).")
+        ORDER BY `product`.`id` DESC
+      ";
+      $result = db::query($query);
+      $products = array();
+      foreach($result as $row)
+      {
+        $products[$row['id']] = $row;
+      }
+      $content->products = $products;
     }
     elseif($step == 'done')
     {
