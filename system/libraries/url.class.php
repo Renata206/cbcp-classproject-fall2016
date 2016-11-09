@@ -2,7 +2,7 @@
 
 class url
 {
-  public function to($page_name = '', $params = array())
+  public static function to($page_name = '', $params = array())
   {
     $qs = http_build_query(array_merge($page_name?array('page' => $page_name):array(), $params));
     return config::get('url_base').($qs?'?'.$qs:'');

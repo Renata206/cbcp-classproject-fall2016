@@ -30,6 +30,7 @@ foreach($libs as $file)
 
 
 // MODELS
+/*
 $models = scandir(MODELS_DIR);
 foreach($models as $file)
 {
@@ -39,6 +40,7 @@ foreach($models as $file)
     require_once(MODELS_DIR.'/'.$file);
   }
 }
+*/
 
 
 // load the configuration of our project
