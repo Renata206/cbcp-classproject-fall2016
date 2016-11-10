@@ -22,7 +22,7 @@ $libs = scandir(LIBRARIES_DIR);
 foreach($libs as $file)
 {
   if($file == '.' || $file == '..') continue;
-  if(is_file(LIBRARIES_DIR.'/'.$file))
+  if(is_file(LIBRARIES_DIR.'/'.$file) && pathinfo($file, PATHINFO_EXTENSION) == 'php')
   {
     require_once(LIBRARIES_DIR.'/'.$file);
   }

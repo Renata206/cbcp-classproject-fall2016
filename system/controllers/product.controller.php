@@ -25,14 +25,19 @@ class product_controller
       return;
     }
 
-    if(!empty($_POST['order']))
-    {
-      $amount = isset($_POST['amount'])?(float)$_POST['amount']:0;
-      if($amount > 0)
-      {
-        basket::addItem($content->product['id'], $amount, $content->product['price']);
-      }  
+    if(isset($_POST['order']))
+    { 
+      // add the amount of products to cart
+      cart::addToCart($product_id, $_POST['amount']);
+
+      // get the URL of this page
+      $this_page_url = url::to('product', array('product_id' => $product_id));
+
+      // redirect to this page using GET (so that the condition above stops being true)
+      return url::redirect($this_page_url);
     }
+
+    var_dump($_COOKIE);
 
     if($content->product)
     {
