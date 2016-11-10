@@ -37,8 +37,6 @@ class product_controller
       return url::redirect($this_page_url);
     }
 
-    var_dump($_COOKIE);
-
     if($content->product)
     {
       $content->title = $content->product['name'];
