@@ -12,8 +12,6 @@ class presenter
 
     // add navbar
     $layout->topmenu = new view('topmenu');
-    $layout->topmenu->basket_count = basket::countItems();
-    $layout->topmenu->basket_price = basket::countTotalPrice();
 
 
     // add footer
