@@ -155,26 +155,27 @@ class cart
     $total = 0;
 
     $product_ids = array_keys($cart_cookie);
+    // if there are products in the cart (otherwise the SQL query will be invalid)
     if(count($product_ids))
     {
-      $string_to_use_in_query = join(', ', $product_ids);
-      $query = "
-        SELECT `product`.*
-        FROM `product`
-        WHERE `product`.`id` IN ({$string_to_use_in_query})
-      ";
-      $substitutions = array(
-      );
-      $result = db::execute($query, $substitutions); // execute the query
-      foreach($result as $product)
-      {
-        $price = $product['price']; // get the price column from the first row
-        
-        $amount = $cart_cookie[ $product['id'] ];
+        $string_to_use_in_query = join(', ', $product_ids);
+        $query = "
+          SELECT `product`.*
+          FROM `product`
+          WHERE `product`.`id` IN ({$string_to_use_in_query})
+        ";
+        $substitutions = array(
+        );
+        $result = db::execute($query, $substitutions); // execute the query
+        foreach($result as $product)
+        {
+            $price = $product['price']; // get the price column from the first row
+            
+            $amount = $cart_cookie[ $product['id'] ];
 
-        // add amount * price to the total
-        $total += $price * $amount;
-      }
+            // add amount * price to the total
+            $total += $price * $amount;
+        }
     }
 
     // return total

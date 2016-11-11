@@ -5,5 +5,5 @@
 </nav>
 
 <div class="cart_bar">
-  In the cart: <?php echo $cart_amount; ?> items. Total price: <?php echo $cart_total; ?> Kč
+  Cart: <?php echo $cart_amount; ?> items, <?php echo number_format($cart_total, 0, ',', ' '); ?> Kč
 </div>

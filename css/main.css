@@ -55,12 +55,12 @@ h2 {
 #topmenu nav.current a, #topmenu nav a:hover, #topmenu .basket a:hover {
   background-color: #999999;
 }
-#topmenu .basket {
+#topmenu .cart_bar {
   float: right;
-}
-#topmenu .basket img {
-  height: 1em;
-  vertical-align: middle;
+  background: transparent url('/img/cart.png') left center no-repeat scroll;
+  background-size: auto 1em;
+  padding-left: 1.5em;
+  margin: 0.5em;
 }
 
 /* FOOTER */
